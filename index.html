@@ -7,6 +7,54 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Сайт находится в разработке!!!</h1>
+  <div class="page">
+    <h1>Андрюха привет</h1>
+    <div class="clock" id="clock">--:--:--</div>
+
+    <div class="auth-container">
+      <div class="tabs">
+        <button class="tab active" onclick="showForm('login')">Вход</button>
+        <button class="tab" onclick="showForm('register')">Регистрация</button>
+      </div>
+
+      <form id="login" class="form active">
+        <h2>Вход</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Пароль" required />
+        <button type="submit">Войти</button>
+      </form>
+
+      <form id="register" class="form">
+        <h2>Регистрация</h2>
+        <input type="text" placeholder="Имя" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Пароль" required />
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function showForm(id) {
+      document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`.tab[onclick*="${id}"]`).classList.add('active');
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const moscowOffset = 3 * 60; // UTC+3
+      const localOffset = now.getTimezoneOffset();
+      const moscowTime = new Date(now.getTime() + (moscowOffset + localOffset) * 60000);
+      const hh = String(moscowTime.getHours()).padStart(2, '0');
+      const mm = String(moscowTime.getMinutes()).padStart(2, '0');
+      const ss = String(moscowTime.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hh}:${mm}:${ss}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 </html>
